@@ -29,10 +29,11 @@
         }
     </style>
     <script>
-        // Shim for process.env used by the Gemini service in the browser
+        // Shim for process.env used by the Gemini service. 
+        // The server.js will replace the empty string with the actual API key during the request.
         window.process = {
             env: {
-                API_KEY: "" // Will be handled by the environment or updated via service
+                API_KEY: "" 
             }
         };
     </script>
@@ -47,7 +48,6 @@
       }
     }
     </script>
-    <!-- Explicitly load the entry point -->
     <script type="module" src="./index.tsx"></script>
 </head>
 <body>
