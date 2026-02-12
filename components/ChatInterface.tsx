@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { geminiService } from '../services/geminiService';
 import { Message } from '../types';
@@ -8,7 +7,7 @@ const ChatInterface: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     { 
       role: 'assistant', 
-      content: 'Hello! I am AegisFlow AI. I can analyze your cloud spend, check for security vulnerabilities, or automate remediation tasks. How can I assist you today?',
+      content: 'Hello! I am Mixxd FinOps AI. I can analyze your cloud spend, check for security vulnerabilities, or automate remediation tasks. How can I assist you today?',
       timestamp: new Date()
     }
   ]);
@@ -64,7 +63,7 @@ const ChatInterface: React.FC = () => {
               }`}>
                 <div className="flex items-center space-x-2 mb-1">
                   <span className="text-[10px] font-bold uppercase opacity-50">
-                    {msg.role === 'user' ? 'You' : 'AegisFlow AI'}
+                    {msg.role === 'user' ? 'You' : 'Mixxd FinOps AI'}
                   </span>
                 </div>
                 <p className="whitespace-pre-wrap text-sm md:text-base leading-relaxed">{msg.content}</p>
@@ -79,7 +78,7 @@ const ChatInterface: React.FC = () => {
                   <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                   <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
                 </div>
-                <span className="text-xs text-slate-500 font-medium">AegisFlow is thinking...</span>
+                <span className="text-xs text-slate-500 font-medium">Mixxd is thinking...</span>
               </div>
             </div>
           )}
@@ -106,7 +105,7 @@ const ChatInterface: React.FC = () => {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
             </button>
           </div>
-          <p className="text-center text-[10px] text-slate-600 mt-2 uppercase font-bold tracking-widest">Powered by Gemini Pro Vision & Agentic Automation</p>
+          <p className="text-center text-[10px] text-slate-600 mt-2 uppercase font-bold tracking-widest">Powered by Gemini & Agentic Automation</p>
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -96,7 +95,7 @@ app.get('*', (req, res) => {
 // Listen on all network interfaces (0.0.0.0)
 app.listen(port, '0.0.0.0', () => {
   console.log(`=========================================`);
-  console.log(`AegisFlow AI server is starting up...`);
+  console.log(`Mixxd FinOps AI server is starting up...`);
   console.log(`Port: ${port}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`Time: ${new Date().toISOString()}`);

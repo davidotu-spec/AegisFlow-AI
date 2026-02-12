@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 
 interface LayoutProps {
@@ -36,7 +35,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
           <div className="bg-indigo-600 p-2 rounded-lg">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
           </div>
-          <span className="text-xl font-bold tracking-tight">AegisFlow AI</span>
+          <span className="text-xl font-bold tracking-tight">Mixxd FinOps AI</span>
         </div>
 
         <nav className="flex-1 px-4 mt-6 space-y-1">
@@ -75,7 +74,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
             <div className="bg-indigo-600 p-1 rounded-md">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
             </div>
-            <span className="font-bold">AegisFlow</span>
+            <span className="font-bold">Mixxd AI</span>
           </div>
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

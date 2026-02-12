@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { MOCK_RESOURCES } from '../constants';
 import { ResourceStatus, CloudResource, CloudProvider } from '../types';
@@ -271,7 +270,7 @@ const FinOps: React.FC = () => {
             </div>
             <h3 className="text-2xl font-bold mb-3">Initialize Deep Cloud Scan?</h3>
             <p className="text-slate-400 leading-relaxed mb-8">
-              AegisFlow will use agentic heuristics to ingest metadata from all configured regions. This might uncover hidden costs and orphaned resources across your multi-cloud tenants.
+              Mixxd will use agentic heuristics to ingest metadata from all configured regions. This might uncover hidden costs and orphaned resources across your multi-cloud tenants.
             </p>
             <div className="flex space-x-4">
               <button 

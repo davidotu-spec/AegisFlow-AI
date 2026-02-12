@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { CHART_DATA } from '../constants';
@@ -79,7 +78,7 @@ const Dashboard: React.FC = () => {
         </div>
 
         <div className="bg-slate-900/50 border border-slate-800 p-6 rounded-2xl flex flex-col">
-          <h3 className="font-semibold text-lg mb-6">Agentic Activity Log</h3>
+          <h3 className="font-semibold text-lg mb-6">Mixxd Activity Log</h3>
           <div className="space-y-4 overflow-y-auto flex-1 max-h-[300px]">
             {[
               { time: '2m ago', action: 'Port 22 closed', resource: 'db-tier-1', status: 'Security Fix' },

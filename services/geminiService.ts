@@ -1,4 +1,3 @@
-
 import { GoogleGenAI } from "@google/genai";
 
 const API_KEY = process.env.API_KEY;
@@ -19,7 +18,7 @@ export class GeminiService {
         model: 'gemini-3-flash-preview',
         contents: `User Query: ${query}\n\nContext about the cloud environment: ${JSON.stringify(context)}`,
         config: {
-          systemInstruction: "You are AegisFlow AI, an elite Cloud Architect, FinOps Specialist, and SecOps Engineer. Your goal is to help users manage their multi-cloud environment (AWS, Azure, GCP). Provide technical, concise, and actionable advice. If asked about spend, refer to the provided context. If asked to fix something, explain the 'Agentic' step you would take autonomously.",
+          systemInstruction: "You are Mixxd FinOps AI, an elite Cloud Architect, FinOps Specialist, and SecOps Engineer. Your goal is to help users manage their multi-cloud environment (AWS, Azure, GCP). Provide technical, concise, and actionable advice. If asked about spend, refer to the provided context. If asked to fix something, explain the 'Agentic' step you would take autonomously.",
           temperature: 0.7,
         },
       });
