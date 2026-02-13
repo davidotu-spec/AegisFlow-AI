@@ -16,6 +16,11 @@ const App: React.FC = () => {
   const [phase, setPhase] = useState<Phase>('welcome');
   const [activeTab, setActiveTab] = useState('dashboard');
 
+  const handleTryDemo = () => {
+    setPhase('app');
+    setActiveTab('demo');
+  };
+
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
@@ -38,11 +43,11 @@ const App: React.FC = () => {
   };
 
   if (phase === 'welcome') {
-    return <Welcome onNext={() => setPhase('intro')} />;
+    return <Welcome onNext={() => setPhase('intro')} onTryDemo={handleTryDemo} />;
   }
 
   if (phase === 'intro') {
-    return <Introduction onStart={() => setPhase('app')} />;
+    return <Introduction onStart={() => setPhase('app')} onTryDemo={handleTryDemo} />;
   }
 
   return (

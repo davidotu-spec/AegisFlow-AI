@@ -2,9 +2,10 @@ import React from 'react';
 
 interface IntroductionProps {
   onStart: () => void;
+  onTryDemo: () => void;
 }
 
-const Introduction: React.FC<IntroductionProps> = ({ onStart }) => {
+const Introduction: React.FC<IntroductionProps> = ({ onStart, onTryDemo }) => {
   const features = [
     {
       title: 'Agentic AI Reasoning',
@@ -71,13 +72,24 @@ const Introduction: React.FC<IntroductionProps> = ({ onStart }) => {
             <h4 className="text-2xl font-bold text-white">Ready to automate your multi-cloud?</h4>
             <p className="text-slate-500">Your agentic companion is waiting for initial instructions.</p>
           </div>
-          <button 
-            onClick={onStart}
-            className="group relative px-16 py-6 bg-white text-slate-950 font-black rounded-[2rem] hover:bg-indigo-50 transition-all active:scale-95 shadow-[0_20px_50px_rgba(255,255,255,0.1)] flex items-center space-x-3"
-          >
-            <span className="text-lg">Enter Command Center</span>
-            <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-          </button>
+          
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <button 
+              onClick={onStart}
+              className="group relative px-16 py-6 bg-white text-slate-950 font-black rounded-[2rem] hover:bg-indigo-50 transition-all active:scale-95 shadow-[0_20px_50px_rgba(255,255,255,0.1)] flex items-center space-x-3 w-full sm:w-auto justify-center"
+            >
+              <span className="text-lg">Enter Command Center</span>
+              <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            </button>
+            
+            <button 
+              onClick={onTryDemo}
+              className="px-16 py-6 bg-slate-900 border border-slate-700 hover:bg-slate-800 text-white font-black rounded-[2rem] transition-all active:scale-95 flex items-center justify-center w-full sm:w-auto"
+            >
+              <span className="text-lg">Try Interactive Demo</span>
+            </button>
+          </div>
+
           <div className="flex items-center space-x-2 text-[10px] text-slate-600 font-bold uppercase tracking-[0.3em]">
             <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 4.946-2.597 9.129-6.514 11.235A1.438 1.438 0 0110 18.5a1.438 1.438 0 01-1.486-.264C4.597 14.129 2 9.946 2 7c0-.68.056-1.35.166-2.001zm9.496 2.193a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 10l2.248-2.808z" clipRule="evenodd" /></svg>
             <span>Biometric Verification Enabled</span>

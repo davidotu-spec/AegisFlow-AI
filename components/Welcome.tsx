@@ -2,9 +2,10 @@ import React from 'react';
 
 interface WelcomeProps {
   onNext: () => void;
+  onTryDemo: () => void;
 }
 
-const Welcome: React.FC<WelcomeProps> = ({ onNext }) => {
+const Welcome: React.FC<WelcomeProps> = ({ onNext, onTryDemo }) => {
   return (
     <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6 overflow-hidden relative">
       {/* Background Aesthetic Elements */}
@@ -28,13 +29,20 @@ const Welcome: React.FC<WelcomeProps> = ({ onNext }) => {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button 
             onClick={onNext}
-            className="group relative px-10 py-5 bg-indigo-600 hover:bg-indigo-500 text-white font-black rounded-2xl transition-all shadow-2xl shadow-indigo-600/30 overflow-hidden active:scale-95"
+            className="group relative px-10 py-5 bg-indigo-600 hover:bg-indigo-500 text-white font-black rounded-2xl transition-all shadow-2xl shadow-indigo-600/30 overflow-hidden active:scale-95 w-full sm:w-auto"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-            <span className="relative flex items-center space-x-2">
+            <span className="relative flex items-center justify-center space-x-2">
               <span>Begin Discovery</span>
               <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
             </span>
+          </button>
+          
+          <button 
+            onClick={onTryDemo}
+            className="px-10 py-5 bg-slate-900 border border-slate-700 hover:bg-slate-800 text-white font-black rounded-2xl transition-all active:scale-95 w-full sm:w-auto"
+          >
+            Try Interactive Demo
           </button>
         </div>
 
