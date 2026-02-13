@@ -7,6 +7,8 @@ import ChatInterface from './components/ChatInterface';
 import Approvals from './components/Approvals';
 import Welcome from './components/Welcome';
 import Introduction from './components/Introduction';
+import DemoMode from './components/DemoMode';
+import ContactUs from './components/ContactUs';
 
 type Phase = 'welcome' | 'intro' | 'app';
 
@@ -26,6 +28,10 @@ const App: React.FC = () => {
         return <Approvals />;
       case 'ai':
         return <ChatInterface />;
+      case 'demo':
+        return <DemoMode />;
+      case 'contact':
+        return <ContactUs />;
       default:
         return <Dashboard />;
     }

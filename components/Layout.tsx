@@ -25,6 +25,12 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
     { id: 'ai', label: 'Agentic AI Chat', icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
     )},
+    { id: 'demo', label: 'Interactive Demo', icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+    )},
+    { id: 'contact', label: 'Contact Us', icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+    )},
   ];
 
   return (
@@ -38,7 +44,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
           <span className="text-xl font-bold tracking-tight">Mixxd FinOps AI</span>
         </div>
 
-        <nav className="flex-1 px-4 mt-6 space-y-1">
+        <nav className="flex-1 px-4 mt-6 space-y-1 overflow-y-auto">
           {navItems.map((item) => (
             <button
               key={item.id}
@@ -86,7 +92,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
 
         {/* Mobile Nav Overlay */}
         {isMobileMenuOpen && (
-          <div className="fixed inset-0 z-50 bg-slate-950/90 md:hidden p-6">
+          <div className="fixed inset-0 z-50 bg-slate-950/90 md:hidden p-6 overflow-y-auto">
             <div className="flex justify-between items-center mb-8">
               <span className="text-2xl font-bold">Menu</span>
               <button onClick={() => setIsMobileMenuOpen(false)} className="p-2">
