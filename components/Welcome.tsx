@@ -26,30 +26,35 @@ const Welcome: React.FC<WelcomeProps> = ({ onNext, onTryDemo }) => {
           The first truly autonomous <span className="text-indigo-400">Agentic FinOps</span> platform.
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="flex flex-col items-center justify-center space-y-16">
           <button 
             onClick={onNext}
-            className="group relative px-10 py-5 bg-indigo-600 hover:bg-indigo-500 text-white font-black rounded-2xl transition-all shadow-2xl shadow-indigo-600/30 overflow-hidden active:scale-95 w-full sm:w-auto"
+            className="group relative px-12 py-6 bg-indigo-600 hover:bg-indigo-500 text-white font-black rounded-2xl transition-all shadow-2xl shadow-indigo-600/30 overflow-hidden active:scale-95 w-full sm:w-auto"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-            <span className="relative flex items-center justify-center space-x-2">
-              <span>Begin Discovery</span>
-              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            <span className="relative flex items-center justify-center space-x-3">
+              <span className="text-lg">Begin Discovery</span>
+              <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
             </span>
           </button>
           
-          <button 
-            onClick={onTryDemo}
-            className="px-10 py-5 bg-slate-900 border border-slate-700 hover:bg-slate-800 text-white font-black rounded-2xl transition-all active:scale-95 w-full sm:w-auto"
-          >
-            Try Interactive Demo
-          </button>
-        </div>
+          <div className="space-y-8 w-full">
+            <div className="flex flex-col items-center space-y-4">
+              <button 
+                onClick={onTryDemo}
+                className="px-8 py-4 bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800 text-slate-200 font-bold rounded-2xl transition-all active:scale-95 flex items-center space-x-2 group shadow-xl"
+              >
+                <svg className="w-5 h-5 text-indigo-400 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span>Try the Agentic Demo</span>
+              </button>
+            </div>
 
-        <div className="mt-24 grid grid-cols-3 gap-8 max-w-lg mx-auto opacity-50 grayscale hover:grayscale-0 transition-all duration-700">
-          <div className="flex items-center justify-center"><img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" alt="AWS" className="h-6 invert" /></div>
-          <div className="flex items-center justify-center"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg" alt="Azure" className="h-6 invert" /></div>
-          <div className="flex items-center justify-center"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Google_Cloud_Logo.svg" alt="GCP" className="h-6 invert" /></div>
+            <div className="grid grid-cols-3 gap-8 max-w-lg mx-auto opacity-30 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-1000">
+              <div className="flex items-center justify-center"><img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" alt="AWS" className="h-6 invert" /></div>
+              <div className="flex items-center justify-center"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg" alt="Azure" className="h-6 invert" /></div>
+              <div className="flex items-center justify-center"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Google_Cloud_Logo.svg" alt="GCP" className="h-6 invert" /></div>
+            </div>
+          </div>
         </div>
       </div>
 
