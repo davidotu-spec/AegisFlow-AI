@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { CHART_DATA } from '../constants';
@@ -5,9 +6,24 @@ import { CHART_DATA } from '../constants';
 const Dashboard: React.FC = () => {
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
-      <header>
-        <h1 className="text-3xl font-bold">Cloud Health Overview</h1>
-        <p className="text-slate-400 mt-1">Real-time status of multi-cloud infrastructure and security posture.</p>
+      <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold">Cloud Health Overview</h1>
+          <p className="text-slate-400 mt-1">Real-time status of multi-cloud infrastructure and security posture.</p>
+        </div>
+
+        {/* System Deployment Status */}
+        <div className="flex items-center space-x-6 px-5 py-2.5 bg-slate-900/50 border border-slate-800 rounded-2xl">
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
+            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Server: Online</span>
+          </div>
+          <div className="flex items-center space-x-2 border-l border-slate-800 pl-6">
+            <div className="w-2 h-2 rounded-full bg-indigo-500"></div>
+            {/* Fix: Cast window to any to access injected process property and avoid TypeScript error */}
+            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Port: {(window as any).process?.env?.PORT || '8080'}</span>
+          </div>
+        </div>
       </header>
 
       {/* Stats Grid */}

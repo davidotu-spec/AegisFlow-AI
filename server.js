@@ -4,13 +4,19 @@ const fs = require('fs');
 const esbuild = require('esbuild');
 const app = express();
 
-// Cloud Run provides the PORT environment variable
+// Cloud Run provides the PORT environment variable. 
+// It is critical to listen on 0.0.0.0 to be reachable within the container.
 const port = process.env.PORT || 8080;
 
 // Log all requests for debugging in Cloud Run logs
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
   next();
+});
+
+// Health check endpoint for Cloud Run startup/liveness probes
+app.get('/healthz', (req, res) => {
+  res.status(200).send('OK');
 });
 
 // Helper to find a file with potential extensions
@@ -26,11 +32,8 @@ function findFile(basePath) {
 }
 
 // Middleware to transpile .tsx and .ts files on-the-fly
-// Also handles extensionless imports from the browser
 app.get('*', async (req, res, next) => {
-  // Skip if it's clearly not a source file request or if it's the root
   if (req.path === '/' || req.path.includes('.')) {
-    // If it has an extension, only handle ts/tsx
     if (!req.path.endsWith('.tsx') && !req.path.endsWith('.ts')) {
       return next();
     }
@@ -39,9 +42,7 @@ app.get('*', async (req, res, next) => {
   let filePath = path.join(__dirname, req.path);
   let loader = 'tsx';
 
-  // Check if file exists as-is
   if (!fs.existsSync(filePath)) {
-    // Try finding it with extensions (for extensionless ESM imports)
     const found = findFile(filePath);
     if (found) {
       filePath = found.path;
@@ -92,12 +93,14 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Listen on all network interfaces (0.0.0.0)
+// Listen on all network interfaces (0.0.0.0) as required for Cloud Run
 app.listen(port, '0.0.0.0', () => {
   console.log(`=========================================`);
-  console.log(`Mixxd FinOps AI server is starting up...`);
-  console.log(`Port: ${port}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`Mixxd FinOps AI server is LIVE`);
+  console.log(`Target Port: ${port}`);
+  console.log(`Binding Address: 0.0.0.0:${port}`);
+  console.log(`Health Check: http://0.0.0.0:${port}/healthz`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'production'}`);
   console.log(`Time: ${new Date().toISOString()}`);
   console.log(`=========================================`);
 });
