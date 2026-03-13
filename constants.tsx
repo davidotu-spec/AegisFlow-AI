@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { CloudProvider, CloudResource, ResourceStatus, SecurityAlert, ApprovalRequest } from './types';
+import { CloudProvider, CloudResource, ResourceStatus, SecurityAlert, ApprovalRequest } from './types.ts';
 
 export const MOCK_RESOURCES: CloudResource[] = [
   { id: 'i-09f1234a', name: 'prod-api-gw', type: 'EC2', provider: CloudProvider.AWS, monthlyCost: 450, status: ResourceStatus.ACTIVE, wasteScore: 5 },

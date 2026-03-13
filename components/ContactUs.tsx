@@ -9,14 +9,32 @@ const ContactUs: React.FC = () => {
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormState('submitting');
     
-    // Simulate API call
-    setTimeout(() => {
-      setFormState('success');
-    }, 1500);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setFormState('success');
+      } else {
+        const errorData = await response.json();
+        console.error('Server error response:', errorData);
+        alert(errorData.error || 'Failed to send message. Please try again.');
+        setFormState('idle');
+      }
+    } catch (error) {
+      console.error('Network or frontend error:', error);
+      alert('An error occurred. Please check your connection and try again.');
+      setFormState('idle');
+    }
   };
 
   if (formState === 'success') {
@@ -60,9 +78,8 @@ const ContactUs: React.FC = () => {
             <div className="space-y-4">
               <h3 className="text-xs font-black text-slate-500 uppercase tracking-widest">Global Headquarters</h3>
               <p className="text-slate-300 font-medium">
-                12a Brockley Road<br/>
-                Westbridgford, Nottingham<br/>
-                NG2 5JY
+                Remote First / Global<br/>
+                Digital Headquarters
               </p>
             </div>
             

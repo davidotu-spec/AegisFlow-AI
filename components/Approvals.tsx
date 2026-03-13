@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { MOCK_APPROVALS } from '../constants';
-import { ApprovalRequest } from '../types';
+import { MOCK_APPROVALS } from '../constants.tsx';
+import { ApprovalRequest } from '../types.ts';
 
 const Approvals: React.FC = () => {
   const [approvals, setApprovals] = useState<ApprovalRequest[]>(MOCK_APPROVALS);

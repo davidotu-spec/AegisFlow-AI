@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import VideoDemo from './VideoDemo.tsx';
 
 interface IntroductionProps {
   onStart: () => void;
@@ -6,6 +7,7 @@ interface IntroductionProps {
 }
 
 const Introduction: React.FC<IntroductionProps> = ({ onStart, onTryDemo }) => {
+  const [showVideo, setShowVideo] = useState(false);
   const features = [
     {
       title: 'Agentic AI Reasoning',
@@ -32,6 +34,7 @@ const Introduction: React.FC<IntroductionProps> = ({ onStart, onTryDemo }) => {
 
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col items-center py-20 px-8 overflow-y-auto">
+      {showVideo && <VideoDemo onClose={() => setShowVideo(false)} />}
       <div className="max-w-5xl w-full animate-in slide-in-from-bottom-8 duration-700 space-y-24">
         
         {/* The Manifesto Section */}
@@ -65,6 +68,60 @@ const Introduction: React.FC<IntroductionProps> = ({ onStart, onTryDemo }) => {
           ))}
         </div>
 
+        {/* Cinematic Overview Section */}
+        <div className="bg-slate-900/30 border border-slate-800/50 rounded-[4rem] p-12 md:p-20 relative overflow-hidden group">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-8">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-bold uppercase tracking-[0.2em]">
+                <div className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-pulse"></div>
+                <span>Cinematic Agent Overview</span>
+              </div>
+              <h3 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-tight">
+                See the Agent <br/><span className="text-indigo-500">In Action.</span>
+              </h3>
+              <p className="text-slate-400 text-lg font-medium leading-relaxed">
+                Experience a custom-generated AI visualization of Mixxd navigating complex cloud topologies, 
+                optimizing multi-million dollar budgets, and neutralizing security threats in real-time.
+              </p>
+              <button 
+                onClick={() => setShowVideo(true)}
+                className="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-bold transition-all shadow-xl shadow-indigo-600/20 flex items-center space-x-3 group-hover:scale-105 transform"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" clipRule="evenodd" /></svg>
+                <span>Watch Short Demo Video</span>
+              </button>
+            </div>
+            
+            <div className="relative aspect-video bg-slate-950 rounded-[2.5rem] border border-slate-800 overflow-hidden shadow-2xl group/video cursor-pointer" onClick={() => setShowVideo(true)}>
+              <video 
+                className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover/video:opacity-60 transition-opacity duration-700"
+                autoPlay
+                muted
+                loop
+                playsInline
+                src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-blue-circuit-board-4431-large.mp4"
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent opacity-50"></div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover/video:scale-110 transition-transform">
+                  <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" clipRule="evenodd" /></svg>
+                </div>
+              </div>
+              <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between">
+                <div className="text-[10px] font-bold text-white/40 uppercase tracking-widest">AI Visualization Engine v3.1</div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-1.5 h-1.5 bg-rose-500 rounded-full animate-pulse"></div>
+                  <div className="text-[10px] font-bold text-rose-500 uppercase tracking-widest">Live Demo</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Background Accents */}
+          <div className="absolute top-0 right-0 -mr-32 -mt-32 w-96 h-96 bg-indigo-500/5 rounded-full blur-[120px]"></div>
+          <div className="absolute bottom-0 left-0 -ml-32 -mb-32 w-96 h-96 bg-emerald-500/5 rounded-full blur-[120px]"></div>
+        </div>
+
         {/* Call to Action */}
         <div className="flex flex-col items-center space-y-8 pb-20">
           <div className="h-px w-32 bg-slate-800"></div>
@@ -83,10 +140,10 @@ const Introduction: React.FC<IntroductionProps> = ({ onStart, onTryDemo }) => {
             </button>
             
             <button 
-              onClick={onTryDemo}
+              onClick={() => setShowVideo(true)}
               className="px-16 py-6 bg-slate-900 border border-slate-700 hover:bg-slate-800 text-white font-black rounded-[2rem] transition-all active:scale-95 flex items-center justify-center w-full sm:w-auto"
             >
-              <span className="text-lg">Try Interactive Demo</span>
+              <span className="text-lg">Watch Short Demo Video</span>
             </button>
           </div>
 

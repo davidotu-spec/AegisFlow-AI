@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { geminiService } from '../services/geminiService';
-import { Message } from '../types';
-import { MOCK_ALERTS, MOCK_RESOURCES } from '../constants';
+import { geminiService } from '../services/geminiService.ts';
+import { Message } from '../types.ts';
+import { MOCK_ALERTS, MOCK_RESOURCES } from '../constants.tsx';
 
 const ChatInterface: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import VideoDemo from './VideoDemo.tsx';
 
 interface WelcomeProps {
   onNext: () => void;
@@ -6,8 +7,13 @@ interface WelcomeProps {
 }
 
 const Welcome: React.FC<WelcomeProps> = ({ onNext, onTryDemo }) => {
+  const [showVideo, setShowVideo] = useState(false);
+
   return (
     <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6 overflow-hidden relative">
+      {/* Video Modal */}
+      {showVideo && <VideoDemo onClose={() => setShowVideo(false)} />}
+
       {/* Background Aesthetic Elements */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-[120px] animate-pulse"></div>
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }}></div>
@@ -41,11 +47,17 @@ const Welcome: React.FC<WelcomeProps> = ({ onNext, onTryDemo }) => {
           <div className="space-y-8 w-full">
             <div className="flex flex-col items-center space-y-4">
               <button 
-                onClick={onTryDemo}
+                onClick={() => setShowVideo(true)}
                 className="px-8 py-4 bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800 text-slate-200 font-bold rounded-2xl transition-all active:scale-95 flex items-center space-x-2 group shadow-xl"
               >
                 <svg className="w-5 h-5 text-indigo-400 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                <span>Try the Agentic Demo</span>
+                <span>Watch Short Demo Video</span>
+              </button>
+              <button 
+                onClick={onTryDemo}
+                className="text-slate-500 hover:text-indigo-400 text-xs font-bold uppercase tracking-widest transition-colors"
+              >
+                Or Enter Interactive Command Center
               </button>
             </div>
 
@@ -56,6 +68,13 @@ const Welcome: React.FC<WelcomeProps> = ({ onNext, onTryDemo }) => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Footer Info */}
+      <div className="absolute bottom-8 left-0 right-0 text-center z-10 animate-in fade-in slide-in-from-bottom-2 duration-1000 delay-1000">
+        <p className="text-slate-600 text-xs font-bold uppercase tracking-widest">
+          Inquiries: <a href="mailto:info@mixxd.org" className="text-slate-500 hover:text-indigo-400 transition-colors">info@mixxd.org</a>
+        </p>
       </div>
 
       {/* Grid pattern overlay */}

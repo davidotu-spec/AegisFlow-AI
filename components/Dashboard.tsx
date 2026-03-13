@@ -1,19 +1,31 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { CHART_DATA } from '../constants';
+import { CHART_DATA } from '../constants.tsx';
+import VideoDemo from './VideoDemo.tsx';
 
 const Dashboard: React.FC = () => {
+  const [showVideo, setShowVideo] = useState(false);
+
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
+      {showVideo && <VideoDemo onClose={() => setShowVideo(false)} />}
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold">Cloud Health Overview</h1>
           <p className="text-slate-400 mt-1">Real-time status of multi-cloud infrastructure and security posture.</p>
         </div>
 
-        {/* System Deployment Status */}
-        <div className="flex items-center space-x-6 px-5 py-2.5 bg-slate-900/50 border border-slate-800 rounded-2xl">
+        <div className="flex items-center space-x-3">
+          <button 
+            onClick={() => setShowVideo(true)}
+            className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-sm font-bold rounded-xl shadow-lg shadow-indigo-600/20 transition-all flex items-center space-x-2"
+          >
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" /></svg>
+            <span>Watch Short Demo</span>
+          </button>
+          
+          <div className="flex items-center space-x-6 px-5 py-2.5 bg-slate-900/50 border border-slate-800 rounded-2xl">
           <div className="flex items-center space-x-2">
             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
             <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Server: Online</span>
@@ -24,7 +36,8 @@ const Dashboard: React.FC = () => {
             <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Port: {(window as any).process?.env?.PORT || '8080'}</span>
           </div>
         </div>
-      </header>
+      </div>
+    </header>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -121,26 +134,54 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Recommendation Card */}
-      <div className="bg-gradient-to-r from-indigo-900/40 to-slate-900 border border-indigo-500/30 p-6 rounded-2xl relative overflow-hidden group">
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2">
-            <div className="inline-flex items-center px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-400 text-xs font-bold uppercase tracking-wider mb-2">
-              Top AI Recommendation
+      {/* Recommendation Card & Demo Entry */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="bg-gradient-to-r from-indigo-900/40 to-slate-900 border border-indigo-500/30 p-8 rounded-[2.5rem] relative overflow-hidden group">
+          <div className="relative z-10 flex flex-col justify-between h-full space-y-8">
+            <div className="space-y-4">
+              <div className="inline-flex items-center px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-400 text-[10px] font-black uppercase tracking-widest mb-2">
+                Top AI Recommendation
+              </div>
+              <h4 className="text-3xl font-black tracking-tight">Migration to Spot Instances</h4>
+              <p className="text-slate-400 text-lg leading-relaxed">
+                We identified 4 non-critical dev environments currently running on On-Demand instances. 
+                Switching to Spot Instances can save you <span className="text-emerald-400 font-bold">$1,240/month</span> without risking production stability.
+              </p>
             </div>
-            <h4 className="text-xl font-bold">Migration to Spot Instances</h4>
-            <p className="text-slate-400 max-w-xl">
-              We identified 4 non-critical dev environments currently running on On-Demand instances. 
-              Switching to Spot Instances can save you <span className="text-emerald-400 font-bold">$1,240/month</span> without risking production stability.
-            </p>
+            <button className="w-fit px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-black rounded-2xl transition-all shadow-xl shadow-indigo-600/30 flex items-center justify-center space-x-3 group-hover:scale-105 transform">
+              <span>Execute Agentic Fix</span>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            </button>
           </div>
-          <button className="whitespace-nowrap px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-indigo-600/30 flex items-center justify-center space-x-2 group-hover:scale-105 transform">
-            <span>Execute Agentic Fix</span>
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-          </button>
+          {/* Aesthetic decoration */}
+          <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl group-hover:bg-indigo-500/10 transition-colors"></div>
         </div>
-        {/* Aesthetic decoration */}
-        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl group-hover:bg-indigo-500/10 transition-colors"></div>
+
+        <div className="bg-slate-900/50 border border-slate-800 p-8 rounded-[2.5rem] relative overflow-hidden group cursor-pointer" 
+             onClick={() => setShowVideo(true)}>
+          <div className="relative z-10 flex flex-col justify-between h-full space-y-8">
+            <div className="space-y-4">
+              <div className="inline-flex items-center px-3 py-1 rounded-full bg-rose-500/20 text-rose-400 text-[10px] font-black uppercase tracking-widest mb-2">
+                Interactive Experience
+              </div>
+              <h4 className="text-3xl font-black tracking-tight">Watch the Agent in Action</h4>
+              <p className="text-slate-400 text-lg leading-relaxed">
+                Experience a custom-generated AI visualization of Mixxd navigating complex cloud topologies and neutralizing threats.
+              </p>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:scale-110 transition-transform">
+                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" clipRule="evenodd" /></svg>
+              </div>
+              <span className="text-white font-bold">Launch Short Demo Video</span>
+            </div>
+          </div>
+          
+          {/* Video Preview Mockup */}
+          <div className="absolute top-0 right-0 w-1/2 h-full opacity-20 group-hover:opacity-30 transition-opacity">
+             <div className="w-full h-full bg-gradient-to-l from-indigo-500/20 to-transparent"></div>
+          </div>
+        </div>
       </div>
     </div>
   );

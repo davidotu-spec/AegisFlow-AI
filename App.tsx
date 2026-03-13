@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import Layout from './components/Layout';
-import Dashboard from './components/Dashboard';
-import FinOps from './components/FinOps';
-import SecOps from './components/SecOps';
-import ChatInterface from './components/ChatInterface';
-import Approvals from './components/Approvals';
-import Welcome from './components/Welcome';
-import Introduction from './components/Introduction';
-import DemoMode from './components/DemoMode';
-import ContactUs from './components/ContactUs';
+import React, { useState, useEffect } from 'react';
+import Layout from './components/Layout.tsx';
+import Dashboard from './components/Dashboard.tsx';
+import FinOps from './components/FinOps.tsx';
+import SecOps from './components/SecOps.tsx';
+import ChatInterface from './components/ChatInterface.tsx';
+import Approvals from './components/Approvals.tsx';
+import Welcome from './components/Welcome.tsx';
+import Introduction from './components/Introduction.tsx';
+import DemoMode from './components/DemoMode.tsx';
+import ContactUs from './components/ContactUs.tsx';
+import CopyrightPolicy from './components/CopyrightPolicy.tsx';
 
 type Phase = 'welcome' | 'intro' | 'app';
 
@@ -37,6 +38,8 @@ const App: React.FC = () => {
         return <DemoMode />;
       case 'contact':
         return <ContactUs />;
+      case 'copyright':
+        return <CopyrightPolicy />;
       default:
         return <Dashboard />;
     }

@@ -31,6 +31,9 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
     { id: 'contact', label: 'Contact Us', icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
     )},
+    { id: 'copyright', label: 'Copyright Policy', icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+    )},
   ];
 
   return (
@@ -48,6 +51,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
           {navItems.map((item) => (
             <button
               key={item.id}
+              data-tab={item.id}
               onClick={() => setActiveTab(item.id)}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                 activeTab === item.id 
@@ -61,13 +65,19 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
           ))}
         </nav>
 
-        <div className="p-4 border-t border-slate-800">
+        <div className="p-4 border-t border-slate-800 space-y-4">
           <div className="flex items-center space-x-3 px-4 py-3 bg-slate-800/50 rounded-xl">
             <div className="w-8 h-8 rounded-full bg-slate-600 flex items-center justify-center text-xs">JD</div>
             <div className="flex-1 overflow-hidden">
               <p className="text-sm font-medium truncate">James Wilson</p>
               <p className="text-xs text-slate-500 truncate">CTO @ Innovate</p>
             </div>
+          </div>
+          <div className="px-4 text-[10px] text-slate-600 font-bold uppercase tracking-widest text-center space-y-1">
+            <p>&copy; 2026 Mixxd AI. All rights reserved.</p>
+            <p className="text-slate-500 hover:text-indigo-400 transition-colors">
+              <a href="mailto:info@mixxd.org">info@mixxd.org</a>
+            </p>
           </div>
         </div>
       </aside>
