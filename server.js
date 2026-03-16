@@ -175,11 +175,8 @@ app.get('*', async (req, res, next) => {
   }
 });
 
-// Serve static files from the root directory
-app.use(express.static(__dirname));
-
-// Inject environment variables into index.html on request
-app.get('/', (req, res) => {
+// Helper to serve index.html with injected environment variables
+async function serveIndex(req, res) {
   const htmlPath = path.join(__dirname, 'index.html');
   if (!fs.existsSync(htmlPath)) {
     return res.status(404).send('index.html not found');
@@ -194,19 +191,40 @@ app.get('/', (req, res) => {
     NODE_ENV: process.env.NODE_ENV || "production"
   };
   
-  console.log(`[Server] Injecting API Key: ${env.GEMINI_API_KEY ? 'Present (starts with ' + env.GEMINI_API_KEY.substring(0, 4) + '...)' : 'Missing'}`);
+  console.log(`[Server] Injecting environment into ${req.path}. API Key: ${env.GEMINI_API_KEY ? 'Present' : 'Missing'}`);
   
   // Replace the entire window.process block for reliability
+  // We use a more flexible regex to catch variations in whitespace/formatting
   const shimRegex = /window\.process\s*=\s*\{[\s\S]*?\};/;
   const newShim = `window.process = { env: ${JSON.stringify(env)} };`;
-  html = html.replace(shimRegex, newShim);
+  
+  if (shimRegex.test(html)) {
+    html = html.replace(shimRegex, newShim);
+  } else {
+    // Fallback: inject before </head> if regex fails
+    console.warn('[Server] Could not find window.process shim in index.html, using fallback injection');
+    const scriptTag = `<script>${newShim}</script>`;
+    html = html.replace('</head>', `${scriptTag}\n</head>`);
+  }
   
   res.send(html);
-});
+}
+
+// Inject environment variables into index.html on request
+app.get('/', serveIndex);
+
+// Serve static files from the root directory, but DON'T serve index.html automatically
+// This ensures our custom serveIndex logic handles the root and SPA routes
+app.use(express.static(__dirname, { index: false }));
 
 // Handle Single Page Application (SPA) routing
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+app.get('*', (req, res, next) => {
+  // If it's a request for a file (has an extension), it would have been caught by express.static
+  // If we're here, it's likely a route that should serve index.html
+  if (path.extname(req.path)) {
+    return next();
+  }
+  serveIndex(req, res);
 });
 
 // Listen on all network interfaces (0.0.0.0) as required for Cloud Run

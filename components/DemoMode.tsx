@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { GoogleGenAI } from "@google/genai";
 
 interface LogEntry {
   type: 'observation' | 'reasoning' | 'action' | 'result';
@@ -53,113 +52,11 @@ const DemoMode: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<string | null>(null);
   const [savings, setSavings] = useState(0);
   const [securityScore, setSecurityScore] = useState(88);
-  const [isVideoGenerating, setIsVideoGenerating] = useState(false);
-  const [videoUrl, setVideoUrl] = useState<string | null>('https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-blue-circuit-board-4431-large.mp4');
-  const [videoError, setVideoError] = useState<string | null>(null);
-  const [generationStatus, setGenerationStatus] = useState<string>('');
-  const [showVideoHero, setShowVideoHero] = useState(true);
   const logEndRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [logs]);
-
-  // Cleanup blob URL
-  useEffect(() => {
-    return () => {
-      if (videoUrl && videoUrl.startsWith('blob:')) {
-        URL.revokeObjectURL(videoUrl);
-      }
-    };
-  }, [videoUrl]);
-
-  const handleUseSampleVideo = () => {
-    setVideoUrl('https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-blue-circuit-board-4431-large.mp4');
-    setVideoError(null);
-  };
-
-  const handleGenerateVideo = async () => {
-    setVideoError(null);
-    // @ts-ignore
-    const hasKey = await window.aistudio.hasSelectedApiKey();
-    if (!hasKey) {
-      // @ts-ignore
-      await window.aistudio.openSelectKey();
-    }
-
-    setIsVideoGenerating(true);
-    setGenerationStatus('Initializing cinematic engine...');
-    
-    try {
-      // Guidelines: Always use process.env.GEMINI_API_KEY for the Gemini API.
-      const env = (window as any).process?.env || {};
-      const apiKey = env.GEMINI_API_KEY || env.API_KEY;
-      
-      if (!apiKey) {
-        throw new Error('Gemini API key not found. Please check your configuration in the Settings menu.');
-      }
-      
-      const ai = new GoogleGenAI({ apiKey });
-      
-      setGenerationStatus('Synthesizing cloud topology visualization...');
-      let operation = await ai.models.generateVideos({
-        model: 'veo-3.1-fast-generate-preview',
-        prompt: 'A cinematic high-tech visualization of an autonomous Cloud FinOps and Security agent. The video features a sleek, futuristic AI entity (Mixxd) navigating a glowing 3D cloud network topology. Holographic interfaces display real-time cost savings metrics ($ saved) and security threat neutralization (shields blocking red attack vectors). Dark luxury aesthetic with deep navy, neon indigo, and vibrant emerald highlights. Professional, cinematic lighting with shallow depth of field. The atmosphere is calm, authoritative, and highly advanced, like a mission control center for the global cloud.',
-        config: {
-          numberOfVideos: 1,
-          resolution: '720p',
-          aspectRatio: '16:9'
-        }
-      });
-
-      let pollCount = 0;
-      const maxPolls = 30; // 5 minutes max
-
-      while (!operation.done && pollCount < maxPolls) {
-        pollCount++;
-        setGenerationStatus(`Rendering frames and applying AI logic... (${Math.round((pollCount / maxPolls) * 100)}%)`);
-        await new Promise(resolve => setTimeout(resolve, 10000));
-        operation = await ai.operations.getVideosOperation({ operation: operation });
-      }
-
-      if (!operation.done) {
-        throw new Error('Video generation timed out. Please try again or use the sample video.');
-      }
-
-      const downloadLink = operation.response?.generatedVideos?.[0]?.video?.uri;
-      if (downloadLink) {
-        setGenerationStatus('Finalizing video stream...');
-        const response = await fetch(downloadLink, {
-          method: 'GET',
-          headers: {
-            'x-goog-api-key': apiKey,
-          },
-        });
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch video: ${response.statusText} (${response.status})`);
-        }
-        
-        const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-        setVideoUrl(url);
-      } else {
-        throw new Error('Video generation completed but no download link was provided.');
-      }
-    } catch (error: any) {
-      console.error('Video generation failed:', error);
-      setVideoError(error.message || 'An unexpected error occurred during video generation.');
-      
-      if (error?.message?.includes('entity was not found') || error?.message?.includes('API key')) {
-        // @ts-ignore
-        await window.aistudio.openSelectKey();
-      }
-    } finally {
-      setIsVideoGenerating(false);
-      setGenerationStatus('');
-    }
-  };
 
   const runScenario = async (scenario: DemoScenario) => {
     setActiveScenario(scenario);
@@ -212,96 +109,7 @@ const DemoMode: React.FC = () => {
 
   return (
     <div className="space-y-12 animate-in fade-in duration-700 pb-20 max-w-6xl mx-auto">
-      {/* Hero Video Section */}
-      {showVideoHero && (
-        <section className="relative w-full aspect-[21/9] bg-slate-900 rounded-[3rem] border border-slate-800 overflow-hidden shadow-2xl group">
-          {videoUrl ? (
-            <video 
-              key={videoUrl}
-              ref={videoRef}
-              className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-1000"
-              autoPlay
-              muted
-              loop
-              playsInline
-              src={videoUrl}
-              onError={() => setVideoError('Failed to play video. The source might be inaccessible.')}
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-950 to-slate-900">
-              <div className="text-center space-y-6 max-w-lg px-6">
-                {isVideoGenerating ? (
-                  <div className="space-y-8">
-                    <div className="relative w-24 h-24 mx-auto">
-                      <div className="absolute inset-0 border-4 border-indigo-500/20 rounded-full"></div>
-                      <div className="absolute inset-0 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-                    </div>
-                    <div className="space-y-2">
-                      <h4 className="text-xl font-bold text-white uppercase tracking-widest">Generating Cinematic Demo</h4>
-                      <p className="text-slate-500 text-sm font-mono animate-pulse">{generationStatus}</p>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="space-y-8">
-                    <div className="w-20 h-20 bg-indigo-500/10 rounded-full flex items-center justify-center mx-auto border border-indigo-500/20">
-                      <svg className="w-10 h-10 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    </div>
-                    <div className="space-y-2">
-                      <h3 className="text-3xl font-black text-white tracking-tight">Experience Mixxd in Motion</h3>
-                      <p className="text-slate-400 text-lg">Generate a custom AI-powered cinematic visualization of your autonomous cloud agent.</p>
-                    </div>
-                    
-                    {videoError && (
-                      <div className="p-4 bg-rose-500/10 border border-rose-500/20 rounded-2xl text-rose-400 text-sm font-medium">
-                        {videoError}
-                      </div>
-                    )}
-
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                      <button 
-                        onClick={handleGenerateVideo}
-                        className="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-black transition-all shadow-2xl shadow-indigo-500/40 active:scale-95 flex items-center space-x-3"
-                      >
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" /></svg>
-                        <span>Generate AI Video</span>
-                      </button>
-                      <button 
-                        onClick={handleUseSampleVideo}
-                        className="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl font-bold transition-all border border-slate-700 active:scale-95"
-                      >
-                        Use Sample Video
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-          
-          {/* Overlay Content */}
-          <div className="absolute inset-0 p-12 flex flex-col justify-end bg-gradient-to-t from-slate-950 via-transparent to-transparent pointer-events-none">
-             <div className="max-w-2xl space-y-4">
-                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold uppercase tracking-widest">
-                  <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
-                  <span>Live Agent Simulation</span>
-                </div>
-                <h2 className="text-4xl font-black text-white tracking-tighter">Autonomous Cloud Governance</h2>
-                <p className="text-slate-300 text-lg font-medium leading-relaxed opacity-80">
-                  Watch as Mixxd reasons through infrastructure anomalies, optimizes spend, and hardens security posture in real-time.
-                </p>
-             </div>
-          </div>
-          
-          {videoUrl && (
-            <button 
-              onClick={() => setShowVideoHero(false)}
-              className="absolute top-8 right-8 p-3 bg-slate-900/50 hover:bg-slate-800 text-slate-400 hover:text-white rounded-full transition-all border border-slate-700/50 backdrop-blur-md"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-            </button>
-          )}
-        </section>
-      )}
+      {/* Metrics Overview */}
 
       {/* Metrics Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">

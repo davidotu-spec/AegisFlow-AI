@@ -1,27 +1,16 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { MOCK_ALERTS } from '../constants.tsx';
-import VideoDemo from './VideoDemo.tsx';
 
 const SecOps: React.FC = () => {
-  const [showVideo, setShowVideo] = useState(false);
-
   return (
     <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
-      {showVideo && <VideoDemo onClose={() => setShowVideo(false)} />}
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold">Autonomous Remediation</h1>
           <p className="text-slate-400 mt-1">Self-healing security policies and compliance watchdog.</p>
         </div>
         <div className="flex items-center space-x-3">
-          <button 
-            onClick={() => setShowVideo(true)}
-            className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-sm font-bold rounded-xl border border-slate-800 transition-all flex items-center space-x-2"
-          >
-            <svg className="w-4 h-4 text-rose-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" /></svg>
-            <span>Watch Demo</span>
-          </button>
           <div className="flex items-center space-x-4 bg-emerald-500/10 border border-emerald-500/30 px-4 py-2 rounded-xl">
             <div className="flex h-2 w-2 relative">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
